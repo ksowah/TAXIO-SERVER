@@ -1,3 +1,4 @@
+import { confirmationPrefix } from "../../constatnts/prefixes";
 import { Resolver, Mutation, Arg } from "type-graphql";
 import User from "../../models/UserModel"
 import { redis } from "../../redis";
@@ -13,12 +14,12 @@ declare module 'express-session' {
 
 @Resolver()
 export class ConfirmUserResolver {
-  @Mutation(() => Boolean) // return type nullable because we might not find a user
+  @Mutation(() => Boolean) 
   async confirmUser(
     @Arg("token") token: string,
   ): Promise<Boolean> {
 
-    const userId = await redis.get(token);
+    const userId = await redis.get(confirmationPrefix + token);
    
     if(!userId) {
         return false;
