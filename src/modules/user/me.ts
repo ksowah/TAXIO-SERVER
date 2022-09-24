@@ -11,7 +11,6 @@ declare module 'express-session' {
 
 @Resolver()
 export class MeResolver {
-  // its okay to leave a dummy querry to make the resolver work
   @Query(() => Person, { nullable: true })
   async me(@Ctx() ctx: MyContext) : Promise<Person | null> {
 
