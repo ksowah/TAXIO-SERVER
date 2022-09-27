@@ -18,10 +18,24 @@ export class Person {
     // dont return password and confirmed to gql/client
     password: string;
 
+    verificationCode: string;
+
     confirmed: boolean;
 
     @Field(() => ID)
     _id: mongoose.Types.ObjectId;
+}
+
+@ObjectType()
+export class UserType {
+    @Field()
+    success: boolean;
+
+    @Field()
+    user: Person;
+
+    @Field()
+    token: string;
 }
 
 // create user schema
@@ -46,6 +60,10 @@ const UserSchema = new mongoose.Schema({
     confirmed: {
         type: Boolean,
         default: false,
+    },
+    verificationCode: {
+        type: String,
+        default: ""
     }
 }   
 )
