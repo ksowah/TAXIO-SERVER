@@ -1,33 +1,29 @@
-import { confirmationPrefix } from "../../constatnts/prefixes";
 import { Resolver, Mutation, Arg } from "type-graphql";
 import User from "../../models/UserModel"
-import { redis } from "../../redis";
-
-
-// fix the error userId is not a property of session
-declare module 'express-session' {
-  export interface SessionData {
-    userId: any;
-  }
-}
 
 
 @Resolver()
 export class ConfirmUserResolver {
   @Mutation(() => Boolean) 
   async confirmUser(
-    @Arg("token") token: string,
+    @Arg("code") code: string,
+    @Arg("email") email: string,
   ): Promise<Boolean> {
 
-    const userId = await redis.get(confirmationPrefix + token);
-   
-    if(!userId) {
-        return false;
+    const user = await User.findOne({email});
+
+    if (!user) {
+        throw new Error("Make sure your email and password are correct");
     }
 
-    await User.findByIdAndUpdate(userId, {confirmed: true}, {new: true});
+    if(user.verificationCode !== code) {
+      throw new Error("Invalid verification code");
+    }
 
-    await redis.del(token);
+    user.confirmed = true;
+    user.verificationCode = "";
+
+    await user.save();
 
     return true
   }

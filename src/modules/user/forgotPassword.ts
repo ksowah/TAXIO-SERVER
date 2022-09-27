@@ -1,9 +1,7 @@
 import User from "../../models/UserModel";
 import { Arg, Mutation, Resolver } from "type-graphql";
-import { redis } from "../../redis";
-import { v4 } from "uuid";
 import { sendEmail } from "../../utils/sendMail";
-import { forgotPasswordPrefix } from "../../constatnts/prefixes";
+import { generateOTP } from "../../utils/generateOTP";
 
 
 @Resolver()
@@ -17,12 +15,14 @@ export class ForgotPasswordResolver {
             return true;
         }
 
-        const token = v4();
+        const verificationCode = generateOTP(4)
 
-        await redis.set(forgotPasswordPrefix + token, user.id, "EX", 60 * 60 * 24);
+        user.verificationCode = verificationCode;
+
+        await user.save();
 
         // send email with the token
-        await sendEmail(email, `http://localhost:3000/user/change-password/${token}`);
+        await sendEmail(email, verificationCode)
 
         return true;
     }
