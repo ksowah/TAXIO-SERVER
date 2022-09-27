@@ -4,13 +4,6 @@ import User, { UserType } from "../../models/UserModel"
 import { generateToken } from "../../utils/tokenGenerator";
 
 
-// fix the error userId is not a property of session
-declare module 'express-session' {
-  export interface SessionData {
-    userId: any;
-  }
-}
-
 
 @Resolver()
 export class LoginResolver {
