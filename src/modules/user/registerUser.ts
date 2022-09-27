@@ -22,8 +22,6 @@ export class RegisterResolver {
   @Mutation(() => String) // return type
   async register(
     @Arg("data") {
-        firstName,
-        lastName,
         email,
         password
     }: RegisterInput,
@@ -35,8 +33,6 @@ export class RegisterResolver {
     // save user to database
     const verificationCode = generateOTP(4);
     const user = await User.create({
-        firstName,
-        lastName,
         email,
         password: hashedPassword,
         verificationCode
