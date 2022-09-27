@@ -1,7 +1,7 @@
 import nodemailer = require("nodemailer");
 
 // async..await is not allowed in global scope, must use a wrapper
-export async function sendEmail(email: string, url: string) {
+export async function sendEmail(email: string, code: string) {
   let testAccount = await nodemailer.createTestAccount();
 
   const transporter = nodemailer.createTransport({
@@ -20,7 +20,7 @@ export async function sendEmail(email: string, url: string) {
     to: email, // list of receivers
     subject: "Hello ✔", // Subject line
     text: "Hello world?", // plain text body
-    html: `<a href="${url}">${url}</a>`, // html body
+    html: `<p>Verification Code: <h1>${code}</h1></p>`, // html body
   });
 
   console.log("Message sent: %s", info.messageId);
