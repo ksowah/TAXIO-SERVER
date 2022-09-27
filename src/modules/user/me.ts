@@ -15,6 +15,7 @@ export class MeResolver {
   async me(@Ctx() ctx: MyContext) : Promise<Person | null> {
 
     if(!ctx.req.session!.userId) {
+      console.log("no session");       
       return null;
     }
 

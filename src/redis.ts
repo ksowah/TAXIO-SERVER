@@ -26,7 +26,7 @@ export const sessionOption: session.SessionOptions = {
     secret: process.env.SESSION_SECRET || "",
     resave: false,
     saveUninitialized: false,
-    cookie: {
+    cookie: { 
       httpOnly: true,
       sameSite: "none",
       secure: true,

@@ -1,8 +1,8 @@
-import { Resolver, Query, Mutation, Arg, UseMiddleware } from "type-graphql";
+import { Resolver, Query, Mutation, Arg } from "type-graphql";
 import * as bcrypt from "bcryptjs"
 import User, { Person } from "../../models/UserModel"
 import { RegisterInput } from "./register/registerInput";
-import { isAuthorized } from "../../middleware/auth";
+// import { isAuthorized } from "../../middleware/auth";
 import { sendEmail } from "../../utils/sendMail";
 import { createConfirmationUrl } from "../../utils/confirmationUrl";
 
@@ -13,7 +13,7 @@ export class RegisterResolver {
   // we can use the @Authorized decorator to protect a resolver either this or a middleware
   // @Authorized()
   // this is how its done with a middleware
-  @UseMiddleware(isAuthorized)
+  // @UseMiddleware(isAuthorized)
   @Query(() => String)
   async hello() {
     return "Hello world!";
@@ -40,7 +40,7 @@ export class RegisterResolver {
         password: hashedPassword
     })
 
-    console.log("the user >>",user);
+    console.log("the registered user >>",user);
     
 
     sendEmail(email, await createConfirmationUrl(user.id));

@@ -24,6 +24,7 @@ export class LoginResolver {
     const user = await User.findOne({email});
 
     if (!user) {
+      console.log("no user found");
         throw new Error("Make sure your email and password are correct");
     }
 
@@ -34,12 +35,13 @@ export class LoginResolver {
     }
 
     if(!user.confirmed) {
+      console.log("user not confirmed");
         throw new Error("Please confirm your email");
     }
 
     ctx.req.session.userId = user.id; // set the cookie with the user id
 
-    console.log(">>>>", ctx.req.session);
+    console.log("context >>>>", ctx.req.session);
     
 
     return user;

@@ -30,12 +30,10 @@ const main = async () => {
     const app = Express();
 
     await apolloServer.start();
-
-    app.set('trust proxy', process.env.NODE_ENV !== 'production')
     
     const corsOptions = {
-      origin: ["https://studio.apollographql.com", "http://localhost:3000"],
-      credentials: true
+      origin: true,
+      credentials: true,
     };
     app.use(cors(corsOptions))
     
