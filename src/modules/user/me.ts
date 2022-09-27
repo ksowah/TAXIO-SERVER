@@ -16,13 +16,13 @@ export class MeResolver {
   @Query(() => Person, { nullable: true })
   async me(@Ctx() ctx: MyContext) : Promise<Person | null> {
 
-console.log(ctx.req.user)
+console.log("me id",ctx.req.user)
 
     if(!ctx.req.user) {
       console.log("no user found");       
       return null;
     }
-
+    
     const user = await User.findById(ctx.req.user)
     
     return user;
