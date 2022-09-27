@@ -1,7 +1,7 @@
-import { Resolver, Mutation, Arg, Ctx } from "type-graphql";
+import { Resolver, Mutation, Arg } from "type-graphql";
 import * as bcrypt from "bcryptjs"
-import User, { Person } from "../../models/UserModel"
-import { MyContext } from "src/types/myContext";
+import User, { UserType } from "../../models/UserModel"
+import { generateToken } from "../../utils/tokenGenerator";
 
 
 // fix the error userId is not a property of session
@@ -14,17 +14,15 @@ declare module 'express-session' {
 
 @Resolver()
 export class LoginResolver {
-  @Mutation(() => Person, {nullable: true}) // return type nullable because we might not find a user
+  @Mutation(() => UserType, {nullable: true}) // return type nullable because we might not find a user
   async login(
     @Arg("email") email: string,
     @Arg("password") password: string,
-    @Ctx() ctx: MyContext // get the context from the request to set the cookie
-  ): Promise<Person | null> {
+  ): Promise<UserType | null> {
 
     const user = await User.findOne({email});
 
     if (!user) {
-      console.log("no user found");
         throw new Error("Make sure your email and password are correct");
     }
 
@@ -39,11 +37,13 @@ export class LoginResolver {
         throw new Error("Please confirm your email");
     }
 
-    ctx.req.session.userId = user.id; // set the cookie with the user id
-
-    console.log("context >>>>", ctx.req.session);
+    const data = {
+      success: true,
+      user,
+      token: generateToken(user.id).accessToken
+    }
     
 
-    return user;
+    return data;
   }
 }
