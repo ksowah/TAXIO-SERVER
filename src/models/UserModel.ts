@@ -6,11 +6,6 @@ import { ObjectType, Field, ID } from "type-graphql"
 @ObjectType()
 export class Person {
     // fields to be returned to gql/client 
-  @Field()
-  firstName: string;
-
-    @Field()
-    lastName: string;
 
     @Field()
     email: string;
@@ -40,14 +35,6 @@ export class UserType {
 
 // create user schema
 const UserSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true
-    },
-    lastName: {
-        type: String,
-        required: true,
-    },
     email: {
         type: String,
         required: true,
