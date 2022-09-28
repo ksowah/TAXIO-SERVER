@@ -13,11 +13,11 @@ export class ConfirmUserResolver {
     const user = await User.findOne({email});
 
     if (!user) {
-        throw new Error("Make sure your email and password are correct");
+        throw new Error("User not found")
     }
 
     if(user.verificationCode !== code) {
-      throw new Error("Invalid verification code");
+      throw new Error("Invalid code")
     }
 
     user.confirmed = true;
