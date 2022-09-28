@@ -21,7 +21,7 @@ export class ForgotPasswordResolver {
 
         await user.save();
 
-        // send email with the token
+        // send email with the code
         await sendEmail(email, verificationCode)
 
         return true;
