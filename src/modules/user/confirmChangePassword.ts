@@ -3,9 +3,9 @@ import User from "../../models/UserModel"
 
 
 @Resolver()
-export class ConfirmUserResolver {
+export class ConfirmChangePasswordResolver {
   @Mutation(() => Boolean) 
-  async confirmUser(
+  async confirmChangePassword(
     @Arg("code") code: string,
     @Arg("email") email: string,
   ): Promise<Boolean> {
@@ -17,11 +17,10 @@ export class ConfirmUserResolver {
     }
 
     if(user.verificationCode !== code) {
-      throw new Error("Invalid code")
+      throw new Error("Invalid code");
     }
 
     user.confirmed = true;
-    user.verificationCode = "";
 
     await user.save();
 
