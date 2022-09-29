@@ -1,37 +1,4 @@
-import mongoose from 'mongoose'
-import { ObjectType, Field, ID } from "type-graphql"
-
-
-// create user type for gql
-@ObjectType()
-export class Person {
-    // fields to be returned to gql/client 
-
-    @Field()
-    email: string;
-
-    // dont return password and confirmed to gql/client
-    password: string;
-
-    verificationCode: string;
-
-    confirmed: boolean;
-
-    @Field(() => ID)
-    _id: mongoose.Types.ObjectId;
-}
-
-@ObjectType()
-export class UserType {
-    @Field()
-    success: boolean;
-
-    @Field()
-    user: Person;
-
-    @Field()
-    token: string;
-}
+import mongoose from "mongoose"
 
 // create user schema
 const UserSchema = new mongoose.Schema({
@@ -51,6 +18,32 @@ const UserSchema = new mongoose.Schema({
     verificationCode: {
         type: String,
         default: ""
+    },
+    firstName: {
+        type: String,
+        default: "",
+        required: true
+    },
+    lastName: {
+        type: String,
+        default: "",
+        required: true
+    },
+    dateOfBirth: {
+        type: Date,
+        default: "",
+        required: true
+    },
+    phoneNumber: {
+        type: String,
+        default: "",
+        required: true
+    },
+    gender: {
+        type: String,
+        enum: ["MALE", "FEMALE", "PREFER NOT TO SAY"],
+        default: "",
+        required: true
     }
 }   
 )

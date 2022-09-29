@@ -1,7 +1,8 @@
 import { Resolver, Mutation, Arg } from "type-graphql";
 import * as bcrypt from "bcryptjs"
-import User, { UserType } from "../../models/UserModel"
+import User from "../../models/UserModel"
 import { generateToken } from "../../utils/tokenGenerator";
+import { UserType } from "../../types/gqlTypes";
 
 
 
