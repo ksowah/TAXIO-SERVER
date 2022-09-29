@@ -1,7 +1,9 @@
 import { Arg, Mutation, Resolver } from "type-graphql";
-import User, { Person } from "../../models/UserModel";
+import User from "../../models/UserModel";
 import bcrypt = require("bcryptjs");
 import { ChangePasswordInputType } from "./changePassword/changePasswordInput";
+import { Person } from "../../types/gqlTypes";
+
 
 @Resolver()
 export class ChangePasswordResolver {
