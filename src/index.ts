@@ -5,6 +5,7 @@ import { buildSchema } from "type-graphql";
 import * as dotenv from "dotenv"
 import connectDB from "./config/db";
 import cors = require("cors");
+import { config } from "./config";
 
 
 dotenv.config()
@@ -34,9 +35,7 @@ const main = async () => {
 
     apolloServer.applyMiddleware({ app, cors: corsOptions });
 
-    const PORT = process.env.PORT || 5000
-    
-    app.listen(PORT, () => console.log("Server started on http://localhost:4000/graphql"))
+    app.listen(config.server.port, () => console.log("Server started on http://localhost:4000/graphql"))
 
 }
 
