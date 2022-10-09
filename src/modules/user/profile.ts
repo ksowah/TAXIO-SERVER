@@ -32,10 +32,10 @@ export class ProfileResolver {
 
         user.firstName = firstName;
         user.lastName = lastName;
-        // date of birth accepted by mongoose as a Date object
         user.dateOfBirth = new Date(dateOfBirth);
         user.phoneNumber = phoneNumber;
         user.gender = gender as any;
+        user.profileUpdated = true;
 
         await user.save();
 
