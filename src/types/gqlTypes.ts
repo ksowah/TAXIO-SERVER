@@ -32,6 +32,9 @@ export class Person {
 
     @Field()
     gender: string
+
+    @Field()
+    profileUpdated: boolean
 }
 
 @ObjectType()
@@ -44,4 +47,22 @@ export class UserType {
 
     @Field()
     token: string;
+}
+
+@ObjectType()
+export class Rides {
+    @Field()
+    description: string;
+
+    @Field()
+    lat: string;
+
+    @Field()
+    lng: string;
+
+    @Field(() => ID)
+    _id: mongoose.Types.ObjectId;
+
+    @Field()
+    user: string;
 }
