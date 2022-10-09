@@ -22,28 +22,27 @@ const UserSchema = new mongoose.Schema({
     firstName: {
         type: String,
         default: "",
-        required: true
     },
     lastName: {
         type: String,
         default: "",
-        required: true
     },
     dateOfBirth: {
         type: Date,
         default: "",
-        required: true
     },
     phoneNumber: {
         type: String,
         default: "",
-        required: true
     },
     gender: {
         type: String,
-        enum: ["MALE", "FEMALE", "PREFER NOT TO SAY"],
-        default: "",
-        required: true
+        enum: ["male", "female", "neutral"],
+        default: "neutral",
+    },
+    profileUpdated: {
+        type: Boolean,
+        default: false
     }
 }   
 )
