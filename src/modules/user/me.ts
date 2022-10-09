@@ -18,8 +18,6 @@ export class MeResolver {
   @Query(() => Person, { nullable: true })
   async me(@Ctx() ctx: MyContext) : Promise<Person | null> {
 
-console.log("me id",ctx.req.user)
-
     if(!ctx.req.user) {
       console.log("no user found");       
       return null;
