@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const RideHistorySchema = new mongoose.Schema({
     description: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     
     lat: {
