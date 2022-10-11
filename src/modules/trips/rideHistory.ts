@@ -19,13 +19,20 @@ export class RideHistoryResolver {
   }
 
   @UseMiddleware(isAuthorized)
-  @Mutation(() => Rides) 
+  @Mutation(() => Rides, {nullable: true}) 
   async history(
     @Arg("description") description: string,
     @Arg("lat") lat: string,
     @Arg("lng") lng: string,
     @Arg("user") user: string,
-  ): Promise<Rides> {
+  ): Promise<Rides | null> {
+
+    // check if description is unique
+    const isUnique = await RideHistoryModel.findOne({ description });
+
+    if (isUnique) {
+      return null
+    }
 
     const history = await RideHistoryModel.create({
         description,
