@@ -25,6 +25,11 @@ const BookingsSchema = new mongoose.Schema({
     destination: {
         type: String,
         required: true
+    },
+    user: {
+        type: String,
+        ref: "User",
+        required: true
     }
 });
 
