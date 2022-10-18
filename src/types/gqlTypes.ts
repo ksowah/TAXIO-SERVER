@@ -86,4 +86,10 @@ export class Bookings {
 
     @Field()
     destination: string;
+
+    @Field(() => ID)
+    _id: mongoose.Types.ObjectId;
+
+    @Field()
+    user: string;
 }
