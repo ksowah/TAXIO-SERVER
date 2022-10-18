@@ -66,3 +66,24 @@ export class Rides {
     @Field()
     user: string;
 }
+
+@ObjectType()
+export class Bookings {
+    @Field()
+    distance: string;
+
+    @Field()
+    time: string;
+
+    @Field()
+    price: string;
+
+    @Field()
+    date: Date;
+
+    @Field()
+    origin: string;
+
+    @Field()
+    destination: string;
+}
