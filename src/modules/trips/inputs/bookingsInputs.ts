@@ -22,4 +22,7 @@ export class BookingsInput {
     @Field()
     destination: string;
 
+    @Field()
+    user: string;
+
 }
