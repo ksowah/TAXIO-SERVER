@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Arg, UseMiddleware } from "type-graphql";
+import { Resolver, Mutation, Arg, UseMiddleware, Query } from "type-graphql";
 import isAuthorized from "../../middleware/auth";
 import { Bookings } from "../../types/gqlTypes";
 import { BookingsInput } from "./inputs/bookingsInputs";
@@ -6,6 +6,19 @@ import BookingsModel from "../../models/BookingsModel";
 
 @Resolver()
 export class BookingsResolver {
+
+  @UseMiddleware(isAuthorized)
+  @Query(() => [Bookings])
+  async getBookings(
+    @Arg("user") user: string,
+  ): Promise<[Bookings]> {
+
+    // get ride history from db based on user id
+    const getBookings = await BookingsModel.find({user}) as [Bookings];
+
+    return getBookings;
+  }
+
   @UseMiddleware(isAuthorized)
   @Mutation(() => Bookings, {nullable: true}) // return type
   async bookings(
@@ -15,21 +28,22 @@ export class BookingsResolver {
         price,
         date,
         origin,
-        destination
+        destination,
+        user
     }: BookingsInput,
    
   ): Promise<Bookings | null> {
 
-//    add bookings to database and return the bookings
-    const bookings = await BookingsModel.create({
+    const addToBookings = await BookingsModel.create({
         distance,
         time,
         price,
         date,
         origin,
-        destination
+        destination,
+        user
     })
 
-    return bookings;
+    return addToBookings;
   }
 }
