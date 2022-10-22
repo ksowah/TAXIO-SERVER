@@ -92,4 +92,7 @@ export class Bookings {
 
     @Field()
     user: string;
+
+    @Field()
+    cancelled: boolean;
 }

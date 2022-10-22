@@ -30,6 +30,10 @@ const BookingsSchema = new mongoose.Schema({
         type: String,
         ref: "User",
         required: true
+    },
+    cancelled: {
+        type: Boolean,
+        default: false
     }
 });
 
