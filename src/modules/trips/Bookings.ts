@@ -13,7 +13,7 @@ export class BookingsResolver {
     @Arg("user") user: string,
   ): Promise<[Bookings]> {
 
-    // get ride history from db based on user id
+
     const getBookings = await BookingsModel.find({user}) as [Bookings];
 
     return getBookings;
@@ -46,4 +46,16 @@ export class BookingsResolver {
 
     return addToBookings;
   }
+
+  // create mutation to cancel bookings
+  @UseMiddleware(isAuthorized)
+  @Mutation(() => Bookings, {nullable: true}) // return type
+  async cancelBookings(
+    @Arg("id") id: string,
+  ): Promise<Bookings | null> {
+      
+      const cancelBooking = await BookingsModel.findByIdAndUpdate(id, {cancelled: true}, {new: true}) as Bookings;
+  
+      return cancelBooking;
+    }
 }
